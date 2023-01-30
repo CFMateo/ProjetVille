@@ -1,6 +1,7 @@
 # https://isn-icn-ljm.pagesperso-orange.fr/basthon-notebook/?from=https://isn-icn-ljm.pagesperso-orange.fr/notebook/ABR-villes.ipynb&aux=https://isn-icn-ljm.pagesperso-orange.fr/fichiers/villes.csv
 
 import csv
+from classe import Ville,Noeud
 
 # A FAiRE: 2) TP "Villes" + Projet le prolongeant:
 # a) rajouter une interface utilisateur (en console par exemple), permettant d'effectuer des requêtes simples sur ces 200 villes:
@@ -10,67 +11,8 @@ import csv
 
 
 #PARTIE TP:
-
-# A FAIRE 1: 
-# Écrire une méthode getRang(self), qui retourne le rang de la ville.
-# Écrire une méthode afficherNom(self), qui affiche le nom de la ville.
-#Écrire une méthode getSuperficie(self), qui retourne la superficie de la ville.
-
-#creation de la classe ville
-class Ville :
-    """classe définissant une ville de France. Chaque ville a 4 attributs :
-        - nom
-        - numero de departement
-        - population (hab)
-        - superficie (km^2)
-        - rang au niveau national (place)"""
-
-    def __init__(self,liste) :
-        self.nom = liste[0]
-        self.departement = int(liste[1])
-        self.population = int(liste[2])
-        self.superficie = float(liste[3])
-        self.rang = int(liste[4])
-        
-    def getRang(self) :
-        return self.rang
-        
-
-    def getSuperficie(self) :
-        return self.superficie
-
-    def afficherVille(self) :
-        print("Nom :" ,self.nom)
-        print("Département :" ,self.departement)
-        print("Population :" ,self.population)
-        print("Superficie :" ,self.superficie, " km²")
-        print("Rang :" ,self.rang)
-
-    def afficherNom(self) :
-        print(self.nom)
-        
-
-
-#creation de classe noeud
-class Noeud:
-    # Le constructeur
-    def __init__(self, liste, left=None, right=None):
-        self.ville = Ville(liste)
-        self.left = left
-        self.right = right
-
-    def __str__(self): # pour l'utilisation de print
-        self.ville.afficherVille()
-    
-    def getValeur(self):
-        self.ville.afficherVille()
-
-    def estFeuille(self):
-        if not self.left and not self.right:
-            return True
-        else:
-            return False
-
+global lInfixe
+lInfixe = []
 
 # À faire : Compléter la fonction inserer(noeud,liste) qui permet de construire l'ABR en fonction du rang
 def insererRang(noeud,liste):
@@ -90,6 +32,7 @@ def insererRang(noeud,liste):
             insererRang(noeud.right,liste)
 
 
+#importation des villes du fichier csv sous forme de liste:
 liste_villes=[]   
 with open("villes.csv",'r',encoding='utf-8') as f:
     lecteur=csv.reader(f,delimiter=',')
@@ -100,6 +43,7 @@ with open("villes.csv",'r',encoding='utf-8') as f:
 
 #Question: Pour obtenir un arbre équilibré, il faut choisir une ville dont le rang est de 100. Pourquoi ? /En quoi est-ce important pour la recherche dans l'arbre ?
 # Réponse: Car il faut choisir la médiane du nb de vlle qui est 200 pour qu'il y est en moyenne environ le meme nb de branche a gauche que a droite
+
 print('---------------')
 print("ABR construit en fonction des RANGS des villes:")
 listeRang = liste_villes[107] #racine de l'ABR en fonction du rang
@@ -109,21 +53,18 @@ for el in liste_villes:
     insererRang(noeudRang,el)
 
 
-global lInfixe
-
 # parcours INFIXE
 def parcours_infixe(noeud) :
     '''Dans un parcours infixe, on liste le noeud la seconde fois qu on le rencontre.'''
     if not noeud == None:
-        parcours_infixe(noeud.left) #appelle recursif avec le fils gauche (si un fils g n'a pas de fls g il l'ajt ensuite a la liste)
+        parcours_infixe(noeud.right) #appelle recursif avec le fils gauche (si un fils g n'a pas de fls g il l'ajt ensuite a la liste)
         lInfixe.append(noeud.ville.nom)
         #print(arbr.valeur)
-        parcours_infixe(noeud.right)
+        parcours_infixe(noeud.left)
 
-lInfixe = []
 parcours_infixe(noeudRang) #va nous permettre d'obtenir une liste range dans l'ordre croissant de rang,qu'on va exploiter
-#À faire :  
-#Écrire une fonction rechercher(noeud,rang), qui retourne la ville dont le rang est rang.
+
+#À faire : Écrire une fonction rechercher(noeud,rang), qui retourne la ville dont le rang est rang.
 def rechercher(noeud,rang):
     assert(0<=rang<201), ' le rang est compris entre 1 et 200'
     return lInfixe[rang]
@@ -131,11 +72,7 @@ print("Voici la ville au rang 100:",rechercher(noeudRang,100))
 
 
 
-
-
-
-#À faire :
-#Modifier ce qu'il faut pour faire afficher les villes par ordre croissant de leur superficie.
+#À faire :  Modifier ce qu'il faut pour faire afficher les villes par ordre croissant de leur superficie.
 def insererSuperficie(noeud,liste):
     ''' l element noeud est celui avec lequel on va comparer la ville,
     le noeud sera donc une racine temporaire differente a chaque appele recursif'''
@@ -155,6 +92,8 @@ def insererSuperficie(noeud,liste):
 
 print('---------------')
 print("ABR construit en fonction des SUPERFICIE des villes:")
+
+# initialisation de l'ABR superficie:
 listeSuperficie = liste_villes[107] #racine de l'ABR en fonction de la superficie
 noeudSup = Noeud(listeSuperficie)
 #noeudSup.getValeur() #affiche les infos de la ville
@@ -162,11 +101,10 @@ for el in liste_villes:
     insererSuperficie(noeudSup,el)
 
 
-
-print('---------dbuigidgiug----------')
 lInfixe = [] #je redeclare la liste comme vide, pour la reinitialiser car c'est une vaeur globale
 parcours_infixe(noeudSup) #va nous permettre d'obtenir une liste range dans l'ordre croissant de superficie ,qu'on va exploiter
-print(lInfixe)
+
+
 #Écrivez une fonction rechercheMax(noeud) qui renvoie la ville ayant la plus grande superficie.
 def rechercheMax(noeud):
     return lInfixe[0]
@@ -174,7 +112,7 @@ print("Voici la ville avec la plus grande superficie:",rechercheMax(noeudSup))
 
 #Écrivez une fonction rechercheMin(noeud) qui renvoie la ville ayant la plus petite superficie.
 def rechercheMin(noeud):
-        return lInfixe[-1] #pPROBLEME: pk ca va juste jusqu'a 169
+        return lInfixe[-1] #PROBLEME: pk ca va juste jusqu'a 169
 print("Voici la ville avec la plus petite superficie:",rechercheMin(noeudSup))
 
 
@@ -248,5 +186,6 @@ def repr_graph(arbre, size=(8,8), null_node=False):
     plt.show()
     plt.close()
 
-repr_graph(noeudSup,(10,10))
+print(lInfixe)
+repr_graph(noeudRang,(10,10))
 #probleme pas avec l'insertion de l'ABR superficie mais avec le parcours infixe
