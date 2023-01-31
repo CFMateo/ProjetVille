@@ -1,6 +1,8 @@
-# https://isn-icn-ljm.pagesperso-orange.fr/basthon-notebook/?from=https://isn-icn-ljm.pagesperso-orange.fr/notebook/ABR-villes.ipynb&aux=https://isn-icn-ljm.pagesperso-orange.fr/fichiers/villes.csv
+#https://isn-icn-ljm.pagesperso-orange.fr/basthon-notebook/?from=https://isn-icn-ljm.pagesperso-orange.fr/notebook/ABR-villes.ipynb&aux=https://isn-icn-ljm.pagesperso-orange.fr/fichiers/villes.csv
 
 import csv
+import networkx as nx
+import matplotlib.pyplot as plt
 from classe import Ville,Noeud
 
 # A FAiRE: 2) TP "Villes" + Projet le prolongeant:
@@ -11,8 +13,6 @@ from classe import Ville,Noeud
 
 
 #PARTIE TP:
-global lInfixe
-lInfixe = []
 
 # À faire : Compléter la fonction inserer(noeud,liste) qui permet de construire l'ABR en fonction du rang
 def insererRang(noeud,liste):
@@ -53,7 +53,9 @@ for el in liste_villes:
     insererRang(noeudRang,el)
 
 
-# parcours INFIXE
+# parcours INFIXE:
+global lInfixe
+lInfixe = []
 def parcours_infixe(noeud) :
     '''Dans un parcours infixe, on liste le noeud la seconde fois qu on le rencontre.'''
     if not noeud == None:
@@ -61,16 +63,16 @@ def parcours_infixe(noeud) :
         lInfixe.append(noeud.ville.nom)
         #print(arbr.valeur)
         parcours_infixe(noeud.left)
+parcours_infixe(noeudRang)
 
-parcours_infixe(noeudRang) #va nous permettre d'obtenir une liste range dans l'ordre croissant de rang,qu'on va exploiter
 
 #À faire : Écrire une fonction rechercher(noeud,rang), qui retourne la ville dont le rang est rang.
-def rechercher(noeud,rang):
+def rechercherRang(noeud,rang):
     assert(0<=rang<201), ' le rang est compris entre 1 et 200'
     return lInfixe[rang]
-print("Voici la ville au rang 100:",rechercher(noeudRang,100))
 
-
+print("Voici la ville de rang 44:")
+rechercherRang(noeudRang,44)
 
 #À faire :  Modifier ce qu'il faut pour faire afficher les villes par ordre croissant de leur superficie.
 def insererSuperficie(noeud,liste):
@@ -101,26 +103,37 @@ for el in liste_villes:
     insererSuperficie(noeudSup,el)
 
 
-lInfixe = [] #je redeclare la liste comme vide, pour la reinitialiser car c'est une vaeur globale
-parcours_infixe(noeudSup) #va nous permettre d'obtenir une liste range dans l'ordre croissant de superficie ,qu'on va exploiter
-
 
 #Écrivez une fonction rechercheMax(noeud) qui renvoie la ville ayant la plus grande superficie.
 def rechercheMax(noeud):
-    return lInfixe[0]
-print("Voici la ville avec la plus grande superficie:",rechercheMax(noeudSup))
+    """
+   est ce que on veut seulement le nom de la ville?
+    """
+    if noeud.right is None:
+        return noeud.getValeur() #si on veut toutes les infos de la ville
+    rechercheMax(noeud.right)
+
+print("Voici la ville avec la plus grande superficie:")
+rechercheMax(noeudSup)
 
 #Écrivez une fonction rechercheMin(noeud) qui renvoie la ville ayant la plus petite superficie.
 def rechercheMin(noeud):
-        return lInfixe[-1] #PROBLEME: pk ca va juste jusqu'a 169
-print("Voici la ville avec la plus petite superficie:",rechercheMin(noeudSup))
+    """
+    """
+    if noeud.left is None:
+        return noeud.getValeur()
+    rechercheMin(noeud.left)
+
+print("Voici la ville avec la plus petite superficie:")
+rechercheMin(noeudSup)
 
 
-import networkx as nx
-import matplotlib.pyplot as plt
 
 
+#pas necessaire:
 def hauteur(arbre):
+    """
+    """
     if arbre is None:
         return 0
     else:
@@ -186,6 +199,6 @@ def repr_graph(arbre, size=(8,8), null_node=False):
     plt.show()
     plt.close()
 
-print(lInfixe)
-repr_graph(noeudRang,(10,10))
-#probleme pas avec l'insertion de l'ABR superficie mais avec le parcours infixe
+
+#repr_graph(noeudSup,(10,10))
+
