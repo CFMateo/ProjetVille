@@ -8,6 +8,7 @@ from classe import Ville,Noeud
 # A FAiRE: 2) TP "Villes" + Projet le prolongeant:
 # a) rajouter une interface utilisateur (en console par exemple), permettant d'effectuer des requêtes simples sur ces 200 villes:
 # Par exemple : "Quelles sont les 10 villes les plus peuplées de France ?" , "Quelles sont les 5 villes ayant la plus petite superficie" ?
+
 # b) Utiliser la bibliothèque folium pour faire apparaitre les résultats sur une carte dans une page web
 
 
@@ -54,25 +55,31 @@ for el in liste_villes:
 
 
 # parcours INFIXE:
-global lInfixe
-lInfixe = []
-def parcours_infixe(noeud) :
+
+def parcours_infixe(noeud,l=[]) :
     '''Dans un parcours infixe, on liste le noeud la seconde fois qu on le rencontre.'''
     if not noeud == None:
         parcours_infixe(noeud.right) #appelle recursif avec le fils gauche (si un fils g n'a pas de fls g il l'ajt ensuite a la liste)
-        lInfixe.append(noeud.ville.nom)
-        #print(arbr.valeur)
+        l.append(noeud.ville.nom)
         parcours_infixe(noeud.left)
-parcours_infixe(noeudRang)
+    return l
+
+#parcours_infixe(noeudRang)
 
 
 #À faire : Écrire une fonction rechercher(noeud,rang), qui retourne la ville dont le rang est rang.
 def rechercherRang(noeud,rang):
     assert(0<=rang<201), ' le rang est compris entre 1 et 200'
-    return lInfixe[rang]
+    if noeud != None:
+        if noeud.ville.rang == rang:
+            return noeud
+        elif noeud.ville.rang > rang:
+            return rechercherRang(noeud.left,rang)
+        else:
+            return rechercherRang(noeud.right,rang)
 
 print("Voici la ville de rang 44:")
-rechercherRang(noeudRang,44)
+rechercherRang(noeudRang,44).getValeur()
 
 #À faire :  Modifier ce qu'il faut pour faire afficher les villes par ordre croissant de leur superficie.
 def insererSuperficie(noeud,liste):
