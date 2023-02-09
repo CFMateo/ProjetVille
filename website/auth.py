@@ -1,9 +1,0 @@
-from flask import Blueprint
-
-auth = Blueprint('auth',__name__)
-
-@auth.route('/Map')
-def Map():
-     return "<p>Map</p>"
-
-

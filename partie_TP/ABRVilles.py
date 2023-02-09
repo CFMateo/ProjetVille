@@ -45,8 +45,8 @@ with open("villes.csv",'r',encoding='utf-8') as f:
 #Question: Pour obtenir un arbre équilibré, il faut choisir une ville dont le rang est de 100. Pourquoi ? /En quoi est-ce important pour la recherche dans l'arbre ?
 # Réponse: Car il faut choisir la médiane du nb de vlle qui est 200 pour qu'il y est en moyenne environ le meme nb de branche a gauche que a droite
 
-print('---------------')
-print("ABR construit en fonction des RANGS des villes:")
+#print('---------------')
+#print("ABR construit en fonction des RANGS des villes:")
 listeRang = liste_villes[107] #racine de l'ABR en fonction du rang
 noeudRang = Noeud(listeRang)
 #noeudRang.getValeur() #affiche les infos de la ville
@@ -64,7 +64,7 @@ def parcours_infixe(noeud,l=[]) :
         parcours_infixe(noeud.left)
     return l
 
-#parcours_infixe(noeudRang)
+#(parcours_infixe(noeudRang)
 
 
 #À faire : Écrire une fonction rechercher(noeud,rang), qui retourne la ville dont le rang est rang.
@@ -78,8 +78,8 @@ def rechercherRang(noeud,rang):
         else:
             return rechercherRang(noeud.right,rang)
 
-print("Voici la ville de rang 44:")
-rechercherRang(noeudRang,44).getValeur()
+#print("Voici la ville de rang 44:")
+#rechercherRang(noeudRang,44).getValeur()
 
 #À faire :  Modifier ce qu'il faut pour faire afficher les villes par ordre croissant de leur superficie.
 def insererSuperficie(noeud,liste):
@@ -99,8 +99,8 @@ def insererSuperficie(noeud,liste):
             insererSuperficie(noeud.right,liste)
 
 
-print('---------------')
-print("ABR construit en fonction des SUPERFICIE des villes:")
+#print('---------------')
+#print("ABR construit en fonction des SUPERFICIE des villes:")
 
 # initialisation de l'ABR superficie:
 listeSuperficie = liste_villes[107] #racine de l'ABR en fonction de la superficie
@@ -120,8 +120,8 @@ def rechercheMax(noeud):
         return noeud.getValeur() #si on veut toutes les infos de la ville
     rechercheMax(noeud.right)
 
-print("Voici la ville avec la plus grande superficie:")
-rechercheMax(noeudSup)
+#print("Voici la ville avec la plus grande superficie:")
+#rechercheMax(noeudSup)
 
 #Écrivez une fonction rechercheMin(noeud) qui renvoie la ville ayant la plus petite superficie.
 def rechercheMin(noeud):
@@ -131,8 +131,30 @@ def rechercheMin(noeud):
         return noeud.getValeur()
     rechercheMin(noeud.left)
 
-print("Voici la ville avec la plus petite superficie:")
-rechercheMin(noeudSup)
+#print("Voici la ville avec la plus petite superficie:")
+#rechercheMin(noeudSup)
 
+
+#aide au projet:
+
+
+def nvilles_haut_rang(n):
+    VillesTrie = parcours_infixe(noeudRang)
+    VillesTrie.reverse() #simplifie la manipulation de la liste
+    return VillesTrie[0:n]
+
+
+def nvilles_bas_rang(n):
+    VillesTrie = parcours_infixe(noeudRang)
+    return VillesTrie[0:n]
+
+def nvilles_haut_sup(n):
+    VillesTrie = parcours_infixe(noeudSup)
+    VillesTrie.reverse() #simplifie la manipulation de la liste
+    return VillesTrie[0:n]
+
+def nvilles_bas_sup(n):
+    VillesTrie = parcours_infixe(noeudSup)
+    return VillesTrie[0:n]
 
 

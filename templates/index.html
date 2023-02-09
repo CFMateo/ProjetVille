@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Number Selector</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+  </head>
+  <body>
+    <form action="/choixvilles" method="get">
+
+    <label> Combien de villes voulez-vous sellectionné ?</label>
+    <input type="number" id="'nbVilles" min="0" max="200" step="1"/>
+
+
+    <label> Selon quel type de critère voulez vous triées ces villes de France ?</label>
+    <select id="tirage" name="typetrie">
+      <option value="basic">Veuillez indiquer votre choix.</option>
+        <option value="HAUTrang"> Celles qui sont les plus peuplées.</option>
+        <option value="MOINSrang">  Celles qui sont les moins peuplées.</option>
+        <option value="HAUTsup"> Celles avec les plus grandes superficie. </option>
+        <option value="MOINSsup"> Celles avec les plus petites superficie.</option>
+    </select>
+
+    <button id="submitButton">Submit</button>
+  </form>
+  </body>
