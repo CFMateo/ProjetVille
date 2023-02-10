@@ -7,13 +7,12 @@
   <body>
     <form action="http://localhost:5000"   method="post">
 
-    <label> Combien de villes voulez-vous sellectionné ?</label>
+    <label> Combien de villes voulez-vous sélectionnées ?</label>
     <input type="number" name="nbVilles" id='nbVilles' min="0" max="200" step="1"/>
 
 
     <label> Selon quel type de critère voulez vous triées ces villes de France ?</label>
-    <select id="tirage" name="typetrie">
-      <option value="basic">Veuillez indiquer votre choix.</option>
+    <select required id="tirage" name="typetrie">
         <option value="HAUTrang"> Celles qui sont les plus peuplées.</option>
         <option value="MOINSrang">  Celles qui sont les moins peuplées.</option>
         <option value="HAUTsup"> Celles avec les plus grandes superficie. </option>
