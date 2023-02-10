@@ -5,19 +5,27 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def choixvilles():
-    if request.method == "POST":
-        result = request.args
-        nb = result['nbVilles']
-        t = result['typetrie']
-        villesSelec = SelecVille(nb,t) 
-        # create the map and add markers for the selected cities
-        map = folium.Map(location=[47.000, 2.000], zoom_start=6)
-        for villes in villesSelec:
-            folium.Marker(location=LatetLong(villes)).add_to(map)
-        return map
-    else:
-        # render the form for the user to select cities
+    if request.method == "GET":
         return render_template("index.html")
+
+    global nb,t
+    #result = request.args #ici on stock dans les variables les valeurs entre par l'utilsateur
+    nb = request.form.get('nbVilles')
+    print(nb)
+    t = request.form.get('typetrie')
+    return map()
+
+
+@app.route('/map',methods=['POST'])
+def map():
+    global nb
+    map = folium.Map(location=[47.000, 2.000], zoom_start=6) #on initialise la map basique
+    villesSelec = SelecVille(nb,t) #va nous renvoyer la liste de ville demandée par l'utilisateur
+    for i in range(nb): #ajout des marqueurs des villes sur la map
+        folium.Marker(location=[villesSelec[i].getLat(), villesSelec[i].getLong()],popup=villesSelec[i].nom,
+                icon=folium.Icon(),).add_to(map)
+    #on renvoie une représentation html de la carte!
+    return map._repr_html_()
 
 def SelecVille(nbdeVille,typedetrie):
     """
@@ -33,15 +41,6 @@ def SelecVille(nbdeVille,typedetrie):
     else:
         return "erreur"
 
-def LatetLong(map,villes):
-    """
-    return the location (latitude and longitude) of the city """
-    geolocator = Nominatim(user_agent="Projet_ville")
-    for i in range(len(villes)):
-        location = geolocator.geocode(villes[i])
-        latitude = location.latitude
-        longitude = location.longitude
-        folium.Marker([latitude, longitude]).add_to(map)
 
 if __name__ == "__main__":
     app.run(debug=True)

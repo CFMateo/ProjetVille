@@ -5,10 +5,10 @@
     <link rel="stylesheet" type="text/css" href="/static/style.css">
   </head>
   <body>
-    <form action="/choixvilles" method="get">
+    <form action="http://localhost:5000"   method="post">
 
     <label> Combien de villes voulez-vous sellectionné ?</label>
-    <input type="number" id="'nbVilles" min="0" max="200" step="1"/>
+    <input type="number" name="nbVilles" id='nbVilles' min="0" max="200" step="1"/>
 
 
     <label> Selon quel type de critère voulez vous triées ces villes de France ?</label>
