@@ -69,6 +69,9 @@ def parcours_infixe(noeud,l=[]) :
 
 #À faire : Écrire une fonction rechercher(noeud,rang), qui retourne la ville dont le rang est rang.
 def rechercherRang(noeud,rang):
+    """
+    fonction qui retourne la ville recherché dont le rang est 'rang'.
+    """
     assert(0<=rang<201), ' le rang est compris entre 1 et 200'
     if noeud != None:
         if noeud.ville.rang == rang:

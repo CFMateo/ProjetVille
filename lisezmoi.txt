@@ -1,0 +1,24 @@
+ - CODA-FORNO MATEO : PROJET VILLES - 
+
+KIT D'UTILISATION:
+    - vous connecter au wifi
+    - éxécuter le fichier main.py
+    - et d'ensuite simplement se connecter au port local sur votre navigateur: http://localhost:5000/
+
+INFORMATIONS GENERALES:
+    J'ai commencer ce projet en me formant a la gestion d'un abr et d'un fichier csv contenant
+    environ 200 villes.
+    J'ai pu donc m'inspirer de cette mini formation via des fonctions pour creer cette affichage 
+    simple via la librairie folium. Dans ce site site internet l'utilsateur aura deux informations
+    a spécifier: nombre de ville qu'il souhaite traite et selon quel type de trie (cad: selon les 
+    rang les plus haute, les superficies les plus petites,..)
+
+INFORMATIONS SUPP:
+    - le fichier ABRVilles est tout le TP + a la fin les fonctions pour les trie utilise dans main
+    - le fichier main.py est celui qui gere toute l'interface du site a l'aide de flask
+    - le fichier index.html (dans le fichier templates) et CSS (fichier static) qui est ce qui gere 
+    l'interface du site pour l'utilsateur.
+
+Cordialement,
+Coda-Forno Mateo.
+

@@ -47,7 +47,7 @@ def SelecVille(nbdeVille,typedetrie):
 
 def ajtbalise(nomVille):
     """
-    grace  ala bibliotheque geopy on va recuperer la position sur la map de
+    grace  a la bibliotheque geopy on va recuperer la position sur la map de
     la ville souhaiter.
     nomVille : str
     
