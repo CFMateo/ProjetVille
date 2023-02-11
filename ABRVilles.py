@@ -151,12 +151,12 @@ def nvilles_bas_rang(n):
     VillesTrie = parcours_infixe(noeudRang)
     return VillesTrie[0:n]
 
-def nvilles_haut_sup(n):
+def nvilles_bas_sup(n):
     VillesTrie = parcours_infixe(noeudSup)
     VillesTrie.reverse() #simplifie la manipulation de la liste
     return VillesTrie[0:n]
 
-def nvilles_bas_sup(n):
+def nvilles_haut_sup(n):
     VillesTrie = parcours_infixe(noeudSup)
     return VillesTrie[0:n]
 
